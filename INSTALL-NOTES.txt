@@ -14,15 +14,12 @@ npm WARN config global `--global`, `--local` are deprecated. Use `--location=glo
 
  ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 
-
  >  NX   Nx CLI is not installed globally.
 
    This means that you might have to use "yarn nx" or "npx nx" to execute commands in the workspace.
    Run "yarn global add nx" or "npm install -g nx" to be able to execute command directly.
 
-
  ——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-
 
  >  NX   First time using Nx? Check out this interactive Nx tutorial.
 
