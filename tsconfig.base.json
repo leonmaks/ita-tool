@@ -14,7 +14,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@ita-tool/admin-site-ui-header": [
+        "libs/admin-site-ui-header/src/index.ts"
+      ],
+      "@ita-tool/api-interface": ["libs/api-interface/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

@@ -1,13 +1,27 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.less';
-import NxWelcome from './nx-welcome';
+import styles from './app.module.less'
+import NxWelcome from './nx-welcome'
 
-import { Route, Routes, Link } from 'react-router-dom';
+import { Route, Routes, Link } from 'react-router-dom'
+import { PageTitle } from '@ita-tool/admin-site-ui-header'
+import { ApiResponse, API_URL } from '@ita-tool/api-interface'
+
+import { useState, useEffect } from 'react'
 
 export function App() {
+  const [apiResponse, setApiResponse] = useState<ApiResponse>({
+    message: 'Loading...',
+  })
+  useEffect(() => {
+    fetch(API_URL)
+      .then((r) => r.json())
+      .then(setApiResponse)
+  }, [])
+
   return (
     <>
-      <NxWelcome title="admin-site" />
+      <PageTitle />
+      <p>{apiResponse.message}</p>
       <div />
 
       {/* START: routes */}
@@ -47,7 +61,7 @@ export function App() {
       </Routes>
       {/* END: routes */}
     </>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -2,7 +2,11 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
+    "admin-cli": "apps/admin-cli",
     "admin-site": "apps/admin-site",
-    "admin-site-e2e": "apps/admin-site-e2e"
+    "admin-site-e2e": "apps/admin-site-e2e",
+    "admin-site-ui-header": "libs/admin-site-ui-header",
+    "api-interface": "libs/api-interface",
+    "api-server": "apps/api-server"
   }
 }

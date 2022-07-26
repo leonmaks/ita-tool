@@ -1,3 +1,23 @@
+1. Create new monorepo workspace
+  npx create-nx-workspace <worspace-name>
+
+2. Add React plugin, application, library, component
+  yarn add -D @nrwl/eeact                                     -- plugin
+  nx generate @nrwl/react:app                                 -- application / project
+  nx g @nrwl/react:lib <lib-name>                             -- library
+  nx g @nrwl/react:component --project=<app-name> <comp-name> -- component inside project
+
+3. Run application
+  nx serve admin-site
+
+4. Add Express plugin, application
+  yarn add -D @nrwl/express -- plugin
+  nx g @nrwl/express:app api-server --frontendProject=admin-site
+
+5. Add Plain Typescript library
+  nx g @nrwl/workspace:lib api-interface
+
+
 D:\dev>npx create-nx-workspace ita-tool
 npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
 √ What to create in the new workspace · apps
