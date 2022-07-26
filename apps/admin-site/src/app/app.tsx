@@ -2,11 +2,10 @@
 import styles from './app.module.less'
 import NxWelcome from './nx-welcome'
 
-import { Route, Routes, Link } from 'react-router-dom'
-import { PageTitle } from '@ita-tool/admin-site-ui-header'
-import { ApiResponse, API_URL } from '@ita-tool/api-interface'
-
-import { useState, useEffect } from 'react'
+import { Route, Routes, Link } from 'react-router-dom';
+import { PageTitle } from '@ita-tool/admin-site-ui-header';
+import { useEffect, useState } from 'react'
+import { ApiResponse } from 'api-interface'
 
 export function App() {
   const [apiResponse, setApiResponse] = useState<ApiResponse>({

@@ -8,5 +8,6 @@
     "admin-site-ui-header": "libs/admin-site-ui-header",
     "api-interface": "libs/api-interface",
     "api-server": "apps/api-server"
+    "imp-csv": "libs/imp-csv"
   }
 }
