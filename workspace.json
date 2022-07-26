@@ -3,6 +3,8 @@
   "version": 2,
   "projects": {
     "admin-site": "apps/admin-site",
-    "admin-site-e2e": "apps/admin-site-e2e"
+    "admin-site-e2e": "apps/admin-site-e2e",
+    "admin-site-ui-header": "libs/admin-site-ui-header",
+    "imp-csv": "libs/imp-csv"
   }
 }

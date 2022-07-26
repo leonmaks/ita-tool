@@ -3,6 +3,7 @@ import styles from './app.module.less';
 import NxWelcome from './nx-welcome';
 
 import { Route, Routes, Link } from 'react-router-dom';
+import { PageTitle } from '@ita-tool/admin-site-ui-header';
 
 export function App() {
   return (
