@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ElementType {
+  id        Int       @id
+  name      String    @unique
+  Element   Element[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Element {
+  id                  String        @id @default(uuid())
+  type                ElementType   @relation(fields: [typeId], references: [id])
+  typeId              Int
+  sourceLinks         ElementLink[] @relation("SourceLinks")
+  targetLinks         ElementLink[] @relation("TargetLinks")
+  sm_ci_code          String
+  sm_type             String
+  sm_subtype          String?
+  sm_hpc_status       String
+  sm_environment      String?
+  sm_name             String
+  sm_ip_address_list  String?
+  sm_name2            String?
+  sm_j_cpu_proc_count String?
+  sm_j_cpu_count      String?
+  sm_j_ram            String?
+  sm_j_hdd            String?
+  sm_j_ssd            String?
+  sm_tps_placement    String?
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+}
+
+model ElementLinkType {
+  id          Int           @id
+  name        String        @unique
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  ElementLink ElementLink[]
+}
+
+model ElementLink {
+  id        String          @id @default(uuid())
+  type      ElementLinkType @relation(fields: [typeId], references: [id])
+  typeId    Int
+  source    Element         @relation("SourceLinks", fields: [sourceId], references: [id])
+  sourceId  String
+  target    Element         @relation("TargetLinks", fields: [targetId], references: [id])
+  targetId  String
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+}

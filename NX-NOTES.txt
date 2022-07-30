@@ -18,6 +18,10 @@
   nx g @nrwl/workspace:lib api-interface
 
 
+nx generate @nrwl/nest:library products --controller --service
+
+
+
 D:\dev>npx create-nx-workspace ita-tool
 npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
 √ What to create in the new workspace · apps

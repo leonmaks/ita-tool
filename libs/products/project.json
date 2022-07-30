@@ -1,23 +1,23 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/admin-site-ui-header/src",
+  "sourceRoot": "libs/products/src",
   "projectType": "library",
-  "tags": [],
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/admin-site-ui-header/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["libs/products/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/admin-site-ui-header"],
+      "outputs": ["coverage/libs/products"],
       "options": {
-        "jestConfig": "libs/admin-site-ui-header/jest.config.ts",
+        "jestConfig": "libs/products/jest.config.ts",
         "passWithNoTests": true
       }
     }
-  }
+  },
+  "tags": []
 }

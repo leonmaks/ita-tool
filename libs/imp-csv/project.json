@@ -3,6 +3,15 @@
   "sourceRoot": "libs/imp-csv/src",
   "projectType": "library",
   "targets": {
+    "csv-read-dev": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "nodemon -e ts,js --exec ts-node -r tsconfig-paths/register src/lib/csv-read.ts"
+        ],
+        "cwd": "libs/imp-csv"
+      }
+    },
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],

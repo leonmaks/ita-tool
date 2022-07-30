@@ -1,42 +1,45 @@
 import fs from 'fs'
 import { parse } from 'csv-parse'
+import { DictArray, putDictArray } from '@ita-tool/tittles'
 import { ciRecParse, CiRecType } from './ci-rec-parse'
 
-export type CsvRecord = { [header: string]: string }
+export type CsvRecType = CiRecType & {
+  ci?: string,
+  up?: string
+}
 
-export type CsvHandlers = {
+export type CsvHandlersType = {
   recordHandlers: {
-    [header: string]: (record: CsvRecord) => void
+    [header in keyof CsvRecType]?: (record: CsvRecType) => void
   }
 }
 
 export type CsvMap = {
-  [id: string]: CsvRecord
+  [id: string]: CiRecType
 }
 
 export type Csv = {
-  ciMap: CsvMap
+  ciMap: DictArray<CsvRecType>
 }
 
-type CsvHdrCnt = {
-  [header: string]: number
-}
+// type CsvHdrCnt = {
+//   [header: string]: number
+// }
 
-const ciTypes: CsvHdrCnt = {}
+// const ciTypes: CsvHdrCnt = {}
 
-export const csvRead = async (csvFile: string, { recordHandlers }: CsvHandlers): Promise<Csv> => {
+export const csvRead = async (csvFile: string, { recordHandlers }: CsvHandlersType): Promise<Csv> => {
   //
   const csv: Csv = {
     ciMap: {},
   }
-  //
-  const regRec = (rec: { [hdr: string]: string }) => {
-    if (rec.ci) {
-      if (!csv.ciMap[rec.ci]) csv.ciMap[rec.ci] = rec
-    }
-    rec.ci
-    // if (!csv.ciMap[rec.ci]) csv.ciMap[rec.ci] =
+
+  const proceedRec = (rec: CsvRecType) => {
+    if (!rec.ci) return
+    putDictArray(rec.ci, rec, csv.ciMap, true)
+    console.log('csv.ciMap=', csv.ciMap)
   }
+
   /*
 regCI (ci, up):
   CI not exists in CIs
@@ -52,54 +55,58 @@ regCI (ci, up):
       */
 
   //
-  try {
-    fs.createReadStream(csvFile)
-      .pipe(
-        parse({
-          // CSV options
-          bom: true,
-          skip_empty_lines: true,
-          // ltrim: true,
-          columns: (h) => h.map((column: any) => column.toLowerCase()),
-          // on_record: (r, _ctx) => {
-          //   console.log('on_record: before: r=', r)
-          //   r.h_name = r.h_name.replace(/[* ]*/g, '')
-          //   console.log('on_record: after: r=', r)
-          // },
-          // [lines, record[2], record[0]],
-        })
-      )
-      .on('data', async function (r) {
-        // console.log('on_record: before: r=', r)
-        const ciRec: CiRecType = ciRecParse(r)
-        // console.log('on_record: ciRec=', ciRec)
-        for await (const [header, handler] of Object.entries(recordHandlers)) {
-          if (r[header]) handler(r)
-        }
+  fs.createReadStream(csvFile)
+    .pipe(
+      parse({
+        // CSV options
+        bom: true,
+        skip_empty_lines: true,
+        columns: (h) => h.map((column: any) => column.toLowerCase()),
+        // on_record: (r, _ctx) => {
+        //   console.log('on_record: before: r=', r)
+        //   r.h_name = r.h_name.replace(/[* ]*/g, '')
+        //   console.log('on_record: after: r=', r)
+        // },
+        // [lines, record[2], record[0]],
       })
-    // .on('end', function () {
-    //   //do something with csvData
-    //   console.log('end')
-    //   // console.log(csvData)
-    //   console.log(ciTypes)
-    // })
-  } finally {
-  }
+    )
+    .on('data', async function (r) {
+
+      // Parse & validate CSV record
+      const csvRec: CsvRecType = ciRecParse(r)
+
+      // Apply handlers
+      for await (const [header, handler] of Object.entries(recordHandlers)) {
+        if (csvRec[header as keyof CsvRecType]) handler(csvRec)
+      }
+
+      // Proceed & reflect record in CSV maps
+      proceedRec(csvRec)
+
+      // console.log('on_record: csvRec=', csvRec)
+    })
+  // .on('end', function () {
+  //   //do something with csvData
+  //   console.log('end')
+  //   // console.log(csvData)
+  //   console.log(ciTypes)
+  // })
+
   console.log('csvRead: return')
   return csv
 }
 
-const csvRecFns: CsvHandlers = {
+const csvRecFns: CsvHandlersType = {
   recordHandlers: {
     h_name: (r) => {
-      r.ci = r.h_name.replace(/[* ]*/g, '')
+      r.ci = r.h_name
     },
     full_path: (r) => {
-      r.ci_up = r.full_path.substring(r.full_path.lastIndexOf('/') + 1)
+      r.up = r.full_path.slice(-10)
     },
-    type: (r) => {
-      ciTypes[r.type] = (ciTypes[r.type] || 0) + 1
-    },
+    // type: (r) => {
+    //   ciTypes[r.type] = (ciTypes[r.type] || 0) + 1
+    // },
   },
 }
 

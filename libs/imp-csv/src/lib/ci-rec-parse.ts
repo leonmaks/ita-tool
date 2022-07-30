@@ -30,4 +30,4 @@ export const CiRec = z
 
 export type CiRecType = z.infer<typeof CiRec>
 
-export const ciRecParse = (rec: {}) => CiRec.parse(rec)
+export const ciRecParse = (r: unknown) => CiRec.parse(r)

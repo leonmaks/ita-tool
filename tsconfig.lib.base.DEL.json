@@ -1,0 +1,32 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "target": "es2016",
+    "module": "commonjs",
+    "baseUrl": ".",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@ita-tool/admin-site-ui-header": [
+        "libs/admin-site-ui-header/src/index.ts"
+      ],
+      "@ita-tool/api-interface": [
+        "libs/api-interface/src/index.ts"
+      ],
+      "@ita-tool/imp-csv": [
+        "libs/imp-csv/src/index.ts"
+      ],
+      "@ita-tool/tittles": [
+        "libs/tittles/src/index.ts"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
+}

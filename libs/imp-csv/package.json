@@ -1,7 +1,5 @@
 {
   "name": "@ita-tool/imp-csv",
   "version": "0.0.1",
-  "scripts": {
-    "csv-read-dev": "nodemon ./src/lib/csv-read.ts"
-  }
+  "license": "MIT"
 }
